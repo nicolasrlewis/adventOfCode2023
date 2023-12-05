@@ -16,11 +16,11 @@ type SourceToDestination struct {
 
 // day5 Part 2
 func main() {
-	//input, err := util.GetPart2InputFileLines("./day5")
-	input, err := util.GetExample2InputFileLines("./day5")
+	input, err := util.GetPart2InputFileLines("./day5")
+	//input, err := util.GetExample2InputFileLines("./day5")
 	util.Check(err)
 
-	seeds := getSeeds(input[0])
+	//seeds := getSeeds(input[0])
 
 	var seedToSoil, soilToFert, fertToWater, waterToLight, lightToTemp, tempToHum, humToLoc []string
 	index := 3
@@ -46,17 +46,38 @@ func main() {
 	humToLoc = buildMappingList(input[index:])
 	index += len(humToLoc) + 2
 
+	var seedToSoilSTD, soilToFertSTD, fertToWaterSTD, waterToLightSTD, lightToTempSTD, tempToHumSTD, humToLocSTD []SourceToDestination
+	seedToSoilSTD = buildSourceToDestinationList(seedToSoil)
+	soilToFertSTD = buildSourceToDestinationList(soilToFert)
+	fertToWaterSTD = buildSourceToDestinationList(fertToWater)
+	waterToLightSTD = buildSourceToDestinationList(waterToLight)
+	lightToTempSTD = buildSourceToDestinationList(lightToTemp)
+	tempToHumSTD = buildSourceToDestinationList(tempToHum)
+	humToLocSTD = buildSourceToDestinationList(humToLoc)
+
 	minLocation := math.MaxInt
-	for i := 0; i < len(seeds); i++ {
-		location := processSeed(seeds[i], seedToSoil, soilToFert, fertToWater, waterToLight, lightToTemp, tempToHum, humToLoc)
 
-		if location < minLocation {
-			minLocation = location
+	splitInput := strings.Split(input[0], "seeds: ")
+	splitInput = strings.Split(splitInput[1], " ")
+
+	counter := 1
+	for i := 0; i < len(splitInput); i = i + 2 {
+		start, _ := strconv.Atoi(splitInput[i])
+		rangeLen, _ := strconv.Atoi(splitInput[i+1])
+
+		fmt.Printf("Processing seed range #%d\n", counter)
+		for k := start; k < start+rangeLen; k++ {
+			location := processSeed(k, seedToSoilSTD, soilToFertSTD, fertToWaterSTD, waterToLightSTD, lightToTempSTD, tempToHumSTD, humToLocSTD)
+
+			if location < minLocation {
+				minLocation = location
+			}
 		}
-
+		fmt.Printf("Finished processing seed range #%d\n", counter)
+		counter++
 	}
 
-	fmt.Printf("The answer to part1 is: %d\n", minLocation)
+	fmt.Printf("The answer to part2 is: %d\n", minLocation)
 }
 
 func getSeeds(input string) []int {
@@ -109,16 +130,16 @@ func buildSourceToDestinationList(input []string) []SourceToDestination {
 	return sourceToDestList
 }
 
-func processSeed(seed int, seedToSoil []string, soilToFert []string, fertToWater []string, waterToLight []string, lightToTemp []string,
-	tempToHum []string, humToLoc []string) int {
+func processSeed(seed int, seedToSoil []SourceToDestination, soilToFert []SourceToDestination, fertToWater []SourceToDestination, waterToLight []SourceToDestination, lightToTemp []SourceToDestination,
+	tempToHum []SourceToDestination, humToLoc []SourceToDestination) int {
 
-	id := processMapping(seed, buildSourceToDestinationList(seedToSoil))
-	id = processMapping(id, buildSourceToDestinationList(soilToFert))
-	id = processMapping(id, buildSourceToDestinationList(fertToWater))
-	id = processMapping(id, buildSourceToDestinationList(waterToLight))
-	id = processMapping(id, buildSourceToDestinationList(lightToTemp))
-	id = processMapping(id, buildSourceToDestinationList(tempToHum))
-	id = processMapping(id, buildSourceToDestinationList(humToLoc))
+	id := processMapping(seed, seedToSoil)
+	id = processMapping(id, soilToFert)
+	id = processMapping(id, fertToWater)
+	id = processMapping(id, waterToLight)
+	id = processMapping(id, lightToTemp)
+	id = processMapping(id, tempToHum)
+	id = processMapping(id, humToLoc)
 
 	return id
 }
