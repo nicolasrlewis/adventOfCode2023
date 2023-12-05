@@ -80,25 +80,6 @@ func main() {
 	fmt.Printf("The answer to part2 is: %d\n", minLocation)
 }
 
-func getSeeds(input string) []int {
-	var seeds []int
-	splitInput := strings.Split(input, "seeds: ")
-	splitInput = strings.Split(splitInput[1], " ")
-
-	for i := 0; i < len(splitInput); i = i + 2 {
-
-		start, _ := strconv.Atoi(splitInput[i])
-		rangeLen, _ := strconv.Atoi(splitInput[i+1])
-
-		for j := start; j < start+rangeLen; j++ {
-			seeds = append(seeds, j)
-		}
-
-	}
-
-	return seeds
-}
-
 func buildMappingList(input []string) []string {
 	var mappingList []string
 
