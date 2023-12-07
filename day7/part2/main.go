@@ -11,7 +11,7 @@ type HandType int
 type Card int
 
 const (
-	HighCard HandType = iota // Start at 1
+	HighCard HandType = iota
 	OnePair
 	TwoPair
 	ThreeOfAKind
