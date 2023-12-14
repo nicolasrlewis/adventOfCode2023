@@ -330,9 +330,6 @@ func progress(grid Grid, point Point, loop *Loop) (bool, *Node) {
 		}, loop)
 
 		if foundStart {
-			if point.x == 60 && point.y == 74 {
-				fmt.Printf("WHAT")
-			}
 			newNode := &Node{
 				point: point,
 				next:  temp,
@@ -351,9 +348,6 @@ func progress(grid Grid, point Point, loop *Loop) (bool, *Node) {
 		}, loop)
 
 		if foundStart {
-			if point.x == 60 && point.y == 74 {
-				fmt.Printf("WHAT")
-			}
 			newNode := &Node{
 				point: point,
 				next:  temp,
@@ -371,9 +365,6 @@ func progress(grid Grid, point Point, loop *Loop) (bool, *Node) {
 		}, loop)
 
 		if foundStart {
-			if point.x == 60 && point.y == 74 {
-				fmt.Printf("WHAT")
-			}
 			newNode := &Node{
 				point: point,
 				next:  temp,
@@ -391,9 +382,6 @@ func progress(grid Grid, point Point, loop *Loop) (bool, *Node) {
 		}, loop)
 
 		if foundStart {
-			if point.x == 60 && point.y == 74 {
-				fmt.Printf("WHAT")
-			}
 			newNode := &Node{
 				point: point,
 				next:  temp,
@@ -420,9 +408,6 @@ func setLoopTileDistance(grid *Grid, loop Loop) {
 			counter--
 		} else {
 			counter++
-		}
-		if curNode.point.x == 60 && curNode.point.y == 74 {
-			fmt.Printf("WHAT")
 		}
 		grid.tiles[curNode.point.x][curNode.point.y].distanceFromStart = counter
 	}
